@@ -1,4 +1,4 @@
-﻿namespace GameStore.Api;
+﻿namespace GameStore.Api.Dtos;
 
 public record class GameDto(
     int Id,
