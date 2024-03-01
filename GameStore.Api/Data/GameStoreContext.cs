@@ -18,6 +18,4 @@ public class GameStoreContext(DbContextOptions<GameStoreContext> options) : DbCo
             new {Id = 5, Name = "RPG"}
         );
     }
-
-
 }
