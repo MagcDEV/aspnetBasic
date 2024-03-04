@@ -12,7 +12,7 @@ public static class GenreEndpoints
 
         group.MapGet("/", async (GameStoreContext gameStoreContext) =>
         {
-            await gameStoreContext.Genres
+            return await gameStoreContext.Genres
                 .Select(genre => genre.ToDto())
                 .AsNoTracking()
                 .ToListAsync();
