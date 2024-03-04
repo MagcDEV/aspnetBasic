@@ -17,15 +17,15 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5279/games/5
+PUT http://localhost:5279/games/8
 Content-Type: application/json
 
 {
     "name": "Minecraft otro",
-    "genre": "Kids and Family",
+    "genreId": 2,
     "price": 9.99,
     "releaseDate": "2014-11-18"
 }
 
 ###
-DELETE http://localhost:5279/games/5 
+DELETE http://localhost:5279/games/6 

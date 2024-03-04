@@ -12,6 +12,15 @@
 *.user
 *.userosscache
 *.sln.docstates
+# Ignore bin and obj folders
+bin/
+obj/
+
+# Ignore database files
+*.db
+*.sdf
+*.sqlite
+*.sqlite3
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

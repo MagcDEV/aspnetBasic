@@ -1,6 +1,5 @@
 ﻿using GameStore.Api.Dtos;
 using GameStore.Api.Entities;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace GameStore.Api;
 
@@ -20,10 +19,21 @@ public static class GameMapping
 
     public static GameDto ToDto(this Game game)
     {
-        return new(
+        return new GameDto(
             game.Id,
             game.Name,
             game.Genre!.Name,
+            game.Price,
+            game.ReleaseDate
+        );
+    }
+    
+    public static GameDetailsDto ToDetailsDto(this Game game)
+    {
+        return new GameDetailsDto(
+            game.Id,
+            game.Name,
+            game.GenreId,
             game.Price,
             game.ReleaseDate
         );
