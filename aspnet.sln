@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Api", "GameStore.Api\GameStore.Api.csproj", "{62A13EAF-1C15-49DE-A8D9-B43FBF8EF20E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frontAspBasic", "frontAspBasic\frontAspBasic.csproj", "{A6DDE5F8-F531-4A11-9628-68A159A33FD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{62A13EAF-1C15-49DE-A8D9-B43FBF8EF20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62A13EAF-1C15-49DE-A8D9-B43FBF8EF20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62A13EAF-1C15-49DE-A8D9-B43FBF8EF20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6DDE5F8-F531-4A11-9628-68A159A33FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6DDE5F8-F531-4A11-9628-68A159A33FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6DDE5F8-F531-4A11-9628-68A159A33FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6DDE5F8-F531-4A11-9628-68A159A33FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
