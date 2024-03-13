@@ -5,3 +5,32 @@
 <h1 class="text-4xl">Games inventory</h1>
 
 Welcome to your new app.
+<table class="mt-2 table-auto w-full shadow-md rounded-lg">
+  <thead>
+    <tr class="bg-gray-100 text-gray-600 text-left font-medium">
+      <th class="px-4 py-2">Id</th>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Genre</th>
+      <th class="px-4 py-2">Price</th>
+      <th class="px-4 py-2">Release Date</th>
+      <th class="px-4 py-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="border-b border-gray-200 hover:bg-gray-100">
+      <td class="px-4 py-2">1</td>
+      <td class="px-4 py-2">The Shawshank Redemption</td>
+      <td class="px-4 py-2">Drama</td>
+      <td class="px-4 py-2">$19.99</td>
+      <td class="px-4 py-2">1994-10-14</td>
+      <td class="px-4 py-2 flex space-x-2">
+        <button class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-red-100 hover:bg-red-200 rounded-full">
+          <span>Delete</span>
+        </button>
+        <button class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-blue-100 hover:bg-blue-200 rounded-full">
+          <span>Update</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+</table>
