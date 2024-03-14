@@ -1,4 +1,5 @@
 @page "/games"
+@using Models
 
 <PageTitle>Games Inventory</PageTitle>
 
@@ -24,13 +25,58 @@ Welcome to your new app.
       <td class="px-4 py-2">$19.99</td>
       <td class="px-4 py-2">1994-10-14</td>
       <td class="px-4 py-2 flex space-x-2">
-        <button class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-red-100 hover:bg-red-200 rounded-full">
+        <button
+          class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-red-100 hover:bg-red-200 rounded-full">
           <span>Delete</span>
         </button>
-        <button class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-blue-100 hover:bg-blue-200 rounded-full">
+        <button
+          class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-blue-100 hover:bg-blue-200 rounded-full">
           <span>Update</span>
         </button>
       </td>
     </tr>
-    </tbody>
+  </tbody>
 </table>
+
+@code {
+  private Games[] games = new[]{
+    new Games()
+    {
+    Id= 1,
+    Name= "Grand Theft Auto V",
+    Genre= "Action-adventure",
+    Price= 29.99M,
+    ReleaseDate = "2013-09-17"
+    },
+{
+"Id": 2,
+"Name": "The Witcher 3: Wild Hunt",
+"Genre": "Action RPG",
+"Price": 39.99,
+"ReleaseDate": "2015-05-18"
+},
+{
+"Id": 3,
+"Name": "Red Dead Redemption 2",
+"Genre": "Action-adventure",
+"Price": 59.99,
+"ReleaseDate": "2018-10-26"
+},
+{
+"Id": 4,
+"Name": "Horizon Zero Dawn",
+"Genre": "Action RPG",
+"Price": 19.99,
+"ReleaseDate": "2017-02-28"
+},
+{
+"Id": 5,
+"Name": "God of War",
+"Genre": "Action-adventure",
+"Price": 14.99,
+"ReleaseDate": "2018-04-20"
+}
+
+
+}
+}
