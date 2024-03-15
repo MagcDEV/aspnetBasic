@@ -18,6 +18,9 @@ obj/
 
 # Ignore database files
 *.db
+*.db-shm
+*.db-wal
+*.db-wa
 *.sdf
 *.sqlite
 *.sqlite3
