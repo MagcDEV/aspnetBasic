@@ -22,6 +22,14 @@ public class GameClient
       List<Games>? games = await response.Content.ReadFromJsonAsync<List<Games>>();
       return games ?? [];
     }
+    public async Task<Games> CreateGame(Games game)
+    {
+      string url = $"{_baseUrl}/games";
+      HttpResponseMessage response = await _client.PostAsJsonAsync(url, game);
+      response.EnsureSuccessStatusCode();
+      Games? createdGame = await response.Content.ReadFromJsonAsync<Games>()!;
+      return createdGame!;
+    }
 
     public async Task<Games?> GetGameById(int id)
     {
