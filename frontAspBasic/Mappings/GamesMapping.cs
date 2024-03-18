@@ -4,9 +4,9 @@ namespace frontAspBasic.Mappings
 {
     public static class GamesMapping
     {
-        public static GamesDto ToDto(this Games game)
+        public static CreateGamesDto ToDto(this Games game)
         {
-            return new GamesDto()
+            return new CreateGamesDto()
             {
                 Name = game.Name,
                 GenreId = game.GenreId,

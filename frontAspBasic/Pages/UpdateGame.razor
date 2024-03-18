@@ -1,4 +1,4 @@
-@page "/updateGame/{Id}"
+@page "/updateGame/{id}"
 @using Microsoft.AspNetCore.Components.Web
 @using Models
 @using Microsoft.AspNetCore.Components.Forms
@@ -6,53 +6,70 @@
 @inject IToastService toastService
 @using Mappings
 
-[Parameter]
-public int Id { get; set; }
-
 <PageTitle>Update Game</PageTitle>
 
 <h1 class="text-4xl">Update Game</h1>
 
-<EditForm Model="game" OnValidSubmit="HandleValidSubmit">
-    <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
-        <InputText
-            class="shadow appearance-none border rounded w-1/2  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name" @bind-Value="game.Name" />
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="genre">Genre</label>
-        <InputNumber
-            class="shadow appearance-none border rounded w-1/2-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="genre" @bind-Value="game.GenreId" />
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Price</label>
-        <InputNumber
-            class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="price" @bind-Value="game.Price" />
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="releaseDate">Release Date</label>
-        <InputDate
-            class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="releaseDate" @bind-Value="game.ReleaseDate" />
-    </div>
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
-</EditForm>
+@if (updateGameDto == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="newGame">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+            <InputText
+                class="shadow appearance-none border rounded w-1/2  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name" @bind-Value="newGame.Name" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="genre">Genre</label>
+            <InputNumber
+                class="shadow appearance-none border rounded w-1/2-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="genre" @bind-Value="newGame.GenreId" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Price</label>
+            <InputNumber
+                class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="price" @bind-Value="newGame.Price" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="releaseDate">Release Date</label>
+            <InputDate
+                class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="releaseDate" aria-placeholder="" @bind-Value="newGame.ReleaseDate" />
+        </div>
+        <button type="submit"
+            class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Update Game
+        </button>
+    </EditForm>
+}
+
 
 @code {
-    private Games game;
+    [Parameter]
+    public string? Id { get; set; }
+
+    private UpdateGameDto updateGameDto = new UpdateGameDto
+    {
+        Name = "",
+        Genre ="" 
+    };
+    private Games newGame = new Games
+    {
+        Name = string.Empty,
+        GenreId = 0
+    };
 
     protected override async Task OnInitializedAsync()
     {
-        
-        game = await GameClient.GetGameById(Id);
-    }
-
-    private async Task HandleValidSubmit()
-    {
-        await GameClient.UpdateGame(game);
-        toastService.ShowToast("Game updated successfully!", "success");
+        if (Id != null)
+        {
+            updateGameDto = await GameClient.GetGameById(int.Parse(Id));
+            Console.WriteLine(updateGameDto.Genre);
+        }
     }
 }

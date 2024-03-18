@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace frontAspBasic.Models;
 
-public class GamesDto
+public class CreateGamesDto
 {
     public required string Name { get; set; }
     public required int GenreId { get; set; }
