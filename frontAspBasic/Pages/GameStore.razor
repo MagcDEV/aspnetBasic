@@ -1,6 +1,7 @@
 @page "/games"
 @using Microsoft.AspNetCore.Components.Web
 @using Models
+@inject NavigationManager NavigationManager
 @inject GameClient GameClient
 
 <PageTitle>Games Inventory</PageTitle>
@@ -40,7 +41,8 @@ else
               <span>Delete</span>
             </button>
             <button
-              class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-blue-100 hover=bg-blue-200 rounded-full">
+              class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-blue-100 hover=bg-blue-200 rounded-full"
+              @onclick="() => NavigateToUpdateGame(game.Id)">
               <span>Update</span>
             </button>
           </td>
@@ -56,6 +58,11 @@ else
   protected override async Task OnInitializedAsync()
   {
     games = await GameClient.GetAllGames();
+  }
+
+  private void NavigateToUpdateGame(int gameId)
+  {
+    NavigationManager.NavigateTo($"/updateGame/{gameId}");
   }
 
 }

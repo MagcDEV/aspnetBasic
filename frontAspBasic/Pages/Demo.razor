@@ -1,0 +1,11 @@
+@page "/toastdemo"
+@inject IToastService toastService
+
+<h1>Toast Demo</h1>
+
+To show a toast just click one of the buttons below.
+
+<button class="p-2 rounded bg-blue-600" @onclick="@(() => toastService.ShowInfo("I'm an INFO message"))">Info Toast</button>
+<button class="p-2 rounded bg-green-500" @onclick="@(() => toastService.ShowSuccess("I'm a SUCCESS message with a custom title"))">Success Toast</button>
+<button class="p-2 rounded bg-yellow-400" @onclick="@(() => toastService.ShowWarning("I'm a WARNING message"))">Warning Toast</button>
+<button class="p-2 rounded bg-red-600" @onclick="@(() => toastService.ShowError("I'm an ERROR message"))">Error Toast</button>

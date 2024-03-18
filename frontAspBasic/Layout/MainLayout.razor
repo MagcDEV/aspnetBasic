@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.Toast
+@using Blazored.Toast.Configuration
 
 <div class="bg-gray-100 min-h-screen flex flex-col">
     <div class="flex flex-1">
@@ -10,9 +12,10 @@
             <div class="top-row flex justify-between items-center py-4 px-4 
                       bg-gray-200 text-gray-700"> <a href="https://learn.microsoft.com/aspnet/core/" target="_blank"
                     class="text-blue-500 hover:text-blue-700">About</a> </div>
-
             <article class="content px-4 h-full">
                 @Body
+                <BlazoredToasts Position="ToastPosition.BottomRight" Timeout="3" IconType="IconType.FontAwesome"
+                    SuccessClass="success-toast-override" SuccessIcon="fa fa-thumbs-up" ErrorIcon="fa fa-bug" />
             </article>
         </main>
     </div>

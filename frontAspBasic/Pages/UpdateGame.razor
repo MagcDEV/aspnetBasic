@@ -1,4 +1,4 @@
-@page "/newGame"
+@page "/updateGame/{Id}"
 @using Microsoft.AspNetCore.Components.Web
 @using Models
 @using Microsoft.AspNetCore.Components.Forms
@@ -6,68 +6,53 @@
 @inject IToastService toastService
 @using Mappings
 
-<PageTitle>Create New Game</PageTitle>
+[Parameter]
+public int Id { get; set; }
 
-<h1 class="text-4xl">Create New Game</h1>
+<PageTitle>Update Game</PageTitle>
 
-<EditForm Model="newGame" OnValidSubmit="HandleValidSubmit">
+<h1 class="text-4xl">Update Game</h1>
+
+<EditForm Model="game" OnValidSubmit="HandleValidSubmit">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
         <InputText
             class="shadow appearance-none border rounded w-1/2  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name" @bind-Value="newGame.Name" />
+            id="name" @bind-Value="game.Name" />
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="genre">Genre</label>
         <InputNumber
             class="shadow appearance-none border rounded w-1/2-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="genre" @bind-Value="newGame.GenreId" />
+            id="genre" @bind-Value="game.GenreId" />
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Price</label>
         <InputNumber
             class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="price" @bind-Value="newGame.Price" />
+            id="price" @bind-Value="game.Price" />
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="releaseDate">Release Date</label>
         <InputDate
             class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="releaseDate" aria-placeholder="" @bind-Value="newGame.ReleaseDate" />
+            id="releaseDate" @bind-Value="game.ReleaseDate" />
     </div>
-    <button type="submit"
-        class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Create Game
-    </button>
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
 </EditForm>
 
 @code {
-    private Games newGame = new Games
+    private Games game;
+
+    protected override async Task OnInitializedAsync()
     {
-        Name = string.Empty,
-        GenreId = 0
-    };
+        
+        game = await GameClient.GetGameById(Id);
+    }
 
     private async Task HandleValidSubmit()
     {
-        try
-        {
-            if (newGame != null)
-            {
-                var gameToCreate = newGame.ToDto();
-                await GameClient.CreateGame(gameToCreate);
-                toastService.ShowSuccess("Game created successfully");
-            }
-            newGame = new Games
-            {
-                Name = string.Empty,
-                GenreId = 0
-            }; // Reset the form
-            StateHasChanged(); // Force the component to re-render
-        }
-        catch (Exception ex)
-        {
-            toastService.ShowError(ex.Message);
-        }
+        await GameClient.UpdateGame(game);
+        toastService.ShowToast("Game updated successfully!", "success");
     }
 }
