@@ -38,13 +38,11 @@ public class GameClient
       return game;
     }
 
-    public async Task<Games> UpdateGame(Games game)
+    public async Task UpdateGame(int id, CreateGamesDto game)
     {
-        string url = $"{_baseUrl}/games/{game.Id}";
+        string url = $"{_baseUrl}/games/{id}";
         HttpResponseMessage response = await _client.PutAsJsonAsync(url, game);
         response.EnsureSuccessStatusCode();
-        Games? updatedGame = await response.Content.ReadFromJsonAsync<Games>();
-        return updatedGame!;
     }
 
     public async Task DeleteGame(int id)
@@ -52,5 +50,13 @@ public class GameClient
         string url = $"{_baseUrl}/games/{id}";
         HttpResponseMessage response = await _client.DeleteAsync(url);
         response.EnsureSuccessStatusCode();
+    }
+    public async Task<List<GenreDto>> GetGenres()
+    {
+      string url = $"{_baseUrl}/genres";
+      HttpResponseMessage response = await _client.GetAsync(url);
+      response.EnsureSuccessStatusCode();
+      List<GenreDto>? genres = await response.Content.ReadFromJsonAsync<List<GenreDto>>();
+      return genres ?? new List<GenreDto>();
     }
 }

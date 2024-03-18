@@ -14,6 +14,19 @@ namespace frontAspBasic.Mappings
                 ReleaseDate = game.ReleaseDate
             };
         }
+
+        public static CreateGamesDto ToUpdateDto(this UpdateGameDto game, int id)
+        {
+            return new CreateGamesDto()
+            {
+                Name = game.Name,
+                GenreId = id,
+                Price = game.Price,
+                ReleaseDate = game.ReleaseDate
+            };
+        }
+
+
         
     }
 }

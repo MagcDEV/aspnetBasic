@@ -3,6 +3,7 @@
 @using Models
 @inject NavigationManager NavigationManager
 @inject GameClient GameClient
+@inject IToastService ToastService
 
 <PageTitle>Games Inventory</PageTitle>
 
@@ -37,7 +38,8 @@ else
           <td class="px-4 py-2">@game.ReleaseDate</td>
           <td class="px-4 py-2 flex space-x-2">
             <button
-              class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-red-100 hover=bg-red-200 rounded-full">
+              class="inline-flex items-center px-2 py-1 text-xs font-bold leading-none bg-red-100 hover=bg-red-200 rounded-full"
+              @onclick="() => DeleteGame(game.Id)">
               <span>Delete</span>
             </button>
             <button
@@ -63,6 +65,13 @@ else
   private void NavigateToUpdateGame(int gameId)
   {
     NavigationManager.NavigateTo($"/updateGame/{gameId}");
+  }
+
+  private async Task DeleteGame(int gameId)
+  {
+      await GameClient.DeleteGame(gameId);
+      ToastService.ShowSuccess("Game deleted successfully");
+      games = await GameClient.GetAllGames(); // Refresh the list after deletion
   }
 
 }

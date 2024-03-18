@@ -16,30 +16,41 @@
 }
 else
 {
-    <EditForm Model="newGame">
+    <EditForm Model="updateGameDto" OnValidSubmit="HandleValidSubmit">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="id">Id</label>
+            <InputNumber
+                class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="price" @bind-Value="updateGameDto.Id" disabled="disabled" />
+        </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
             <InputText
                 class="shadow appearance-none border rounded w-1/2  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name" @bind-Value="newGame.Name" />
+                id="name" @bind-Value="updateGameDto.Name" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="genre">Genre</label>
-            <InputNumber
+            <InputSelect
                 class="shadow appearance-none border rounded w-1/2-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="genre" @bind-Value="newGame.GenreId" />
+                id="genre" @bind-Value="updateGameDto.Genre">
+                @foreach (var genre in genresList)
+                {
+                    <option value="@genre.Name">@genre.Name</option>
+                }
+            </InputSelect>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Price</label>
             <InputNumber
                 class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="price" @bind-Value="newGame.Price" />
+                id="price" @bind-Value="updateGameDto.Price" />
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="releaseDate">Release Date</label>
             <InputDate
                 class="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="releaseDate" aria-placeholder="" @bind-Value="newGame.ReleaseDate" />
+                id="releaseDate" aria-placeholder="" @bind-Value="updateGameDto.ReleaseDate" />
         </div>
         <button type="submit"
             class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -53,23 +64,57 @@ else
     [Parameter]
     public string? Id { get; set; }
 
-    private UpdateGameDto updateGameDto = new UpdateGameDto
-    {
-        Name = "",
-        Genre ="" 
-    };
-    private Games newGame = new Games
-    {
-        Name = string.Empty,
-        GenreId = 0
-    };
+    private List<GenreDto> genresList = new List<GenreDto>();
 
+
+    private UpdateGameDto updateGameDto = new UpdateGameDto
+        {
+            Name = "",
+            Genre = ""
+        };
     protected override async Task OnInitializedAsync()
     {
-        if (Id != null)
+        try
         {
-            updateGameDto = await GameClient.GetGameById(int.Parse(Id));
-            Console.WriteLine(updateGameDto.Genre);
+            if (Id == null)
+            {
+                throw new Exception("Id is null");
+            }
+            var game = await GameClient.GetGameById(int.Parse(Id));
+            if (game != null)
+            {
+                updateGameDto = game;
+            }
+            var genres = await GameClient.GetGenres();
+            if (genres != null)
+            {
+                genresList = genres;
+            }
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError(e.Message);
+        }
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        try
+        {
+            if (Id == null)
+            {
+                throw new Exception("Id is null");
+            }
+            var genre = genresList.Find(x => x.Name == updateGameDto.Genre);
+            if (genre != null)
+            {
+                await GameClient.UpdateGame(int.Parse(Id), updateGameDto.ToUpdateDto(genre.Id));
+                toastService.ShowSuccess("Game updated successfully");
+            }
+        }
+        catch (Exception e)
+        {
+            toastService.ShowError(e.Message);
         }
     }
 }
