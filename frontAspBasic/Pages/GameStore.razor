@@ -16,6 +16,10 @@ Welcome to your new app.
 }
 else
 {
+  <div class="flex mb-4">
+    <input type="text" @bind="filter" placeholder="Filter by name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+    <button @onclick="FilterGames" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Filter</button>
+  </div>
   <table class="mt-2 table-auto w-full shadow-md rounded-lg">
     <thead>
       <tr class="bg-gray-100 text-gray-600 text-left font-medium">
@@ -55,11 +59,14 @@ else
 }
 
 @code {
+  private List<Games>? AllGames;
   private List<Games>? games;
+  private string filter = "";
 
   protected override async Task OnInitializedAsync()
   {
-    games = await GameClient.GetAllGames();
+    AllGames = await GameClient.GetAllGames();
+    games = AllGames;
   }
 
   private void NavigateToUpdateGame(int gameId)
@@ -69,9 +76,19 @@ else
 
   private async Task DeleteGame(int gameId)
   {
-      await GameClient.DeleteGame(gameId);
-      ToastService.ShowSuccess("Game deleted successfully");
-      games = await GameClient.GetAllGames(); // Refresh the list after deletion
+    await GameClient.DeleteGame(gameId);
+    ToastService.ShowSuccess("Game deleted successfully");
+    games = await GameClient.GetAllGames(); // Refresh the list after deletion
   }
 
+  void FilterGames()
+  {
+    if (games != null && !string.IsNullOrEmpty(filter))
+    {
+      games = games.Where(game => game.Name.Contains(filter)).ToList();
+    } else
+    {
+      games = AllGames;
+    }
+  }
 }
